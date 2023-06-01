@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -15,4 +15,4 @@ const schema = new Schema(
   }
 );
 
-export const Favorite = mongoose.model("Favorite", schema);
+export const Favorite = mongoose.model('Favorite', schema);
