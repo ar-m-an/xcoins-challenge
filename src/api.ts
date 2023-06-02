@@ -8,11 +8,12 @@ import { CORS_ORIGINS, DBURL, PORT } from './config';
 import { router as favoriteRouter } from './routes/favorite.router';
 import { router as profileRouter } from './routes/profile.router';
 import { router as simulatorRouter } from './routes/simulator.router';
+import { logger } from './common/logger';
 
 mongoose
   .connect(`${DBURL}`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log(`Connected to DB ${DBURL}`);
+    logger.info(`Connected to DB ${DBURL}`);
   });
 
 const app = express();
@@ -25,7 +26,7 @@ app.use(profileRouter);
 app.use(simulatorRouter);
 
 const server = app.listen(PORT, () =>
-  console.log(`✅  Ready on port http://localhost:${PORT}`)
+  logger.info(`✅  Ready on port http://localhost:${PORT}`)
 );
 
 export default server;

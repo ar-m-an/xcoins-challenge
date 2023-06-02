@@ -11,6 +11,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'no-console': 'error',
     'import/order': [
       'error',
       {

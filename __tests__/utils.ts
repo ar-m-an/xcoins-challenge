@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { logger } from '../src/common/logger';
+
 const TEST_DB_URL = 'mongodb://localhost:27017/xcoins-test';
 
 export async function connectTestDb(): Promise<void | never> {
@@ -9,19 +11,19 @@ export async function connectTestDb(): Promise<void | never> {
       useUnifiedTopology: true,
     });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 
   mongoose.connection.on('connected', () => {
-    console.log('Connected to MongoDB');
+    logger.info('Connected to MongoDB');
   });
 
   mongoose.connection.on('error', (error) => {
-    console.error('Error connecting to MongoDB:', error);
+    logger.error('Error connecting to MongoDB:', error);
   });
 
   mongoose.connection.on('disconnected', () => {
-    console.log('Disconnected from MongoDB');
+    logger.info('Disconnected from MongoDB');
   });
 }
 
