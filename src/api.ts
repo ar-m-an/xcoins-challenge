@@ -22,6 +22,8 @@ app.use(favoriteRouter);
 app.use(profileRouter);
 app.use(simulatorRouter);
 
-app.listen(PORT, () =>
+const server = app.listen(PORT, () =>
   console.log(`✅  Ready on port http://localhost:${PORT}`)
 );
+
+export default server;
