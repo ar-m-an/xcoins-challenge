@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  db:
+    container_name: xcoins-mongo
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+  server:
+    container_name: xcoins-server
+    restart: always
+    build: .
+    env_file: .env
+    environment:
+      - DBURL=mongodb://db:27017/xcoins
+    ports:
+      - 3000:${PORT}
+    depends_on:
+      - db
