@@ -1,11 +1,10 @@
-import Joi from 'joi-oid';
+import Joi from 'joi';
 import { validate } from 'express-validation';
-import { string } from 'joi';
 
 const getFavoriteByProfile = validate(
   {
     params: Joi.object({
-      profile_id: Joi.objectId().required(),
+      profile_id: Joi.string().required(),
     }),
   },
   { keyByField: true }
@@ -19,7 +18,7 @@ const findOrCreateProfile = validate(
       email: Joi.string().email().required(),
       capital: Joi.number().positive().optional(),
       divisa: Joi.string().optional(),
-      preferred_cryptocurrency: string().optional(),
+      preferred_cryptocurrency: Joi.string().optional(),
     }).required(),
   },
   { keyByField: true }
@@ -28,7 +27,7 @@ const findOrCreateProfile = validate(
 const getSimulatorByProfile = validate(
   {
     params: Joi.object({
-      profile_id: Joi.objectId().required(),
+      profile_id: Joi.string().required(),
     }),
   },
   { keyByField: true }
@@ -37,14 +36,14 @@ const getSimulatorByProfile = validate(
 const createSimulator = validate(
   {
     params: Joi.object({
-      profile_id: Joi.objectId().required(),
+      profile_id: Joi.string().required(),
     }),
     body: Joi.object({
       dateRecorded: Joi.date().required(),
       euros: Joi.number().positive().required(),
       price: Joi.number().positive().required(),
       quantity: Joi.number().positive().required(),
-      cryptocurrency: string().required(),
+      cryptocurrency: Joi.string().required(),
     }).required(),
   },
   { keyByField: true }
