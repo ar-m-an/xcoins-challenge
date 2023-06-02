@@ -1,18 +1,18 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 
-import { connectTestDb, dropTestDb } from './utils';
-import server from '../src/api';
+import { testSetup, testTearDown } from './utils';
 import { SimulatorModel } from '../src/models';
 
 describe('simulators API', () => {
+  let server;
+
   beforeEach(async () => {
-    await connectTestDb();
+    server = await testSetup();
   });
 
   afterEach(async () => {
-    await server.close();
-    await dropTestDb();
+    await testTearDown(server);
   });
 
   it('can list all simulators', async () => {

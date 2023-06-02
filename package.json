@@ -18,9 +18,9 @@
     "winston": "^3.9.0"
   },
   "scripts": {
-    "dev": "ts-node-dev src/api.ts",
+    "dev": "ts-node-dev src/server.ts",
     "seed": "ts-node-dev src/scripts/seed.ts",
-    "start": "node dist/api.js",
+    "start": "node dist/server.js",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --ext .js,.ts --fix",
     "build": "tsc -b",

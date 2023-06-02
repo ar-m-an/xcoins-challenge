@@ -1,17 +1,17 @@
 import request from 'supertest';
 
-import { connectTestDb, dropTestDb } from './utils';
-import server from '../src/api';
+import { testSetup, testTearDown } from './utils';
 import { ProfileModel } from '../src/models';
 
 describe('profiles API', () => {
+  let server;
+
   beforeEach(async () => {
-    await connectTestDb();
+    server = await testSetup();
   });
 
   afterEach(async () => {
-    await server.close();
-    await dropTestDb();
+    await testTearDown(server);
   });
 
   it('can list all profiles', async () => {

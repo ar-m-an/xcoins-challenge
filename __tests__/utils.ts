@@ -1,33 +1,20 @@
 import mongoose from 'mongoose';
+import { Server } from 'http';
 
-import { logger } from '../src/common/logger';
+import app from '../src/api';
+import { PORT } from '../src/config';
+import { connectDb } from '../src/common/db';
 
-const TEST_DB_URL = 'mongodb://localhost:27017/xcoins-test';
+export async function testSetup(): Promise<Server | never> {
+  await connectDb();
+  await mongoose.connection.dropDatabase();
 
-export async function connectTestDb(): Promise<void | never> {
-  try {
-    await mongoose.connect(TEST_DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-  } catch (error) {
-    logger.error(error);
-  }
+  const server = await app.listen(PORT);
 
-  mongoose.connection.on('connected', () => {
-    logger.info('Connected to MongoDB');
-  });
-
-  mongoose.connection.on('error', (error) => {
-    logger.error('Error connecting to MongoDB:', error);
-  });
-
-  mongoose.connection.on('disconnected', () => {
-    logger.info('Disconnected from MongoDB');
-  });
+  return server;
 }
 
-export async function dropTestDb(): Promise<void | never> {
-  await mongoose.connection.dropDatabase();
+export async function testTearDown(server: Server): Promise<void | never> {
+  await server.close();
   await mongoose.disconnect();
 }

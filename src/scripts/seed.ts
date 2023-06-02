@@ -1,13 +1,10 @@
 import mongoose from 'mongoose';
 
-import { DBURL } from '../config';
 import { FavoriteModel, ProfileModel, SimulatorModel } from '../models';
+import { connectDb } from '../common/db';
 
 (async () => {
-  await mongoose.connect(DBURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await connectDb();
 
   const profile = new ProfileModel({
     name: `String`,
