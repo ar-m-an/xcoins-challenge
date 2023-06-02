@@ -86,8 +86,7 @@ describe('simulators API', () => {
       .post(`/api/simulator/${profileId.toString()}`)
       .send(simulator);
 
-    // Todo: return 201 status code
-    expect(response.statusCode).toEqual(200);
+    expect(response.statusCode).toEqual(201);
     expect(response.body.profileId).toEqual(profileId.toString());
   });
 });

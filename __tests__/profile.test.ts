@@ -4,7 +4,7 @@ import { connectTestDb, dropTestDb } from './utils';
 import server from '../src/api';
 import { ProfileModel } from '../src/models';
 
-describe.only('profiles API', () => {
+describe('profiles API', () => {
   beforeEach(async () => {
     await connectTestDb();
   });
@@ -49,9 +49,7 @@ describe.only('profiles API', () => {
       .post('/api/profile/')
       .send(profileData);
 
-    console.log(response.body);
-    // todo: send 201 code
-    expect(response.statusCode).toEqual(200);
+    expect(response.statusCode).toEqual(201);
     expect(response.body.name).toEqual(profileData.name);
     expect(response.body.email).toEqual(profileData.email);
     expect(response.body.nickname).toEqual(profileData.nickname);
@@ -69,8 +67,6 @@ describe.only('profiles API', () => {
     const response = await request(server)
       .post('/api/profile/')
       .send(profileData);
-
-    console.log(response.body);
 
     expect(response.statusCode).toEqual(200);
     expect(response.body.email).toEqual(profileData.email);
