@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import { connectTestDb, dropTestDb } from './utils';
 import server from '../src/api';
-import { Simulator } from '../src/models/Simulator';
+import { SimulatorModel } from '../src/models';
 
 describe('simulators API', () => {
   beforeEach(async () => {
@@ -16,16 +16,16 @@ describe('simulators API', () => {
   });
 
   it('can list all simulators', async () => {
-    await Simulator.create({
-      profile_id: new mongoose.Types.ObjectId(),
+    await SimulatorModel.create({
+      profileId: new mongoose.Types.ObjectId(),
       dateRecorded: new Date(),
       cryptocurrency: 'ETH',
       euros: 1000,
       price: 1200,
       quantity: 10,
     });
-    await Simulator.create({
-      profile_id: new mongoose.Types.ObjectId(),
+    await SimulatorModel.create({
+      profileId: new mongoose.Types.ObjectId(),
       dateRecorded: new Date(),
       cryptocurrency: 'BTC',
       euros: 10000,
@@ -41,24 +41,24 @@ describe('simulators API', () => {
 
   it('can list all simulators for a profile', async () => {
     const profileId = new mongoose.Types.ObjectId();
-    await Simulator.create({
-      profile_id: profileId,
+    await SimulatorModel.create({
+      profileId: profileId,
       dateRecorded: new Date(),
       cryptocurrency: 'ETH',
       euros: 1000,
       price: 1200,
       quantity: 10,
     });
-    await Simulator.create({
-      profile_id: profileId,
+    await SimulatorModel.create({
+      profileId: profileId,
       dateRecorded: new Date(),
       cryptocurrency: 'BTC',
       euros: 10000,
       price: 12000,
       quantity: 20,
     });
-    await Simulator.create({
-      profile_id: new mongoose.Types.ObjectId(),
+    await SimulatorModel.create({
+      profileId: new mongoose.Types.ObjectId(),
       dateRecorded: new Date(),
       cryptocurrency: 'BTC',
       euros: 10000,
@@ -84,10 +84,10 @@ describe('simulators API', () => {
 
     const response = await request(server)
       .post(`/api/simulator/${profileId.toString()}`)
-      .set(simulator);
+      .send(simulator);
 
     // Todo: return 201 status code
     expect(response.statusCode).toEqual(200);
-    expect(response.body.profile_id).toEqual(profileId.toString());
+    expect(response.body.profileId).toEqual(profileId.toString());
   });
 });

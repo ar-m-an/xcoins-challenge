@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { Favorite } from '../models/Favorite';
+import { FavoriteModel } from '../models';
 
 export const router = express.Router();
 
 router.get('/api/favorite', async (req, res) => {
-  const favorite = await Favorite.find().lean();
+  const favorite = await FavoriteModel.find().lean();
   console.log(favorite);
   res.json({ favorite });
 });
@@ -13,8 +13,8 @@ router.get('/api/favorite', async (req, res) => {
 router.get('/api/favorite/:profile_id', async (req, res) => {
   console.log(req.params);
   const { profile_id } = req.params;
-  const query = { profile_id };
+  const query = { profileId: profile_id };
   console.log(query);
-  const data = await Favorite.find(query);
+  const data = await FavoriteModel.find(query);
   res.json(data);
 });

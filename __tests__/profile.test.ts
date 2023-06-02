@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { connectTestDb, dropTestDb } from './utils';
 import server from '../src/api';
-import { Profile } from '../src/models/Profile';
+import { ProfileModel } from '../src/models';
 
 describe.only('profiles API', () => {
   beforeEach(async () => {
@@ -15,21 +15,21 @@ describe.only('profiles API', () => {
   });
 
   it('can list all profiles', async () => {
-    await Profile.create({
+    await ProfileModel.create({
       name: 'John',
       nickname: 'johnny',
       email: 'john@example.com',
       capital: 1000,
       divisa: 'divisa',
-      prefered_cryptocurrency: 'BTC',
+      preferred_cryptocurrency: 'BTC',
     });
-    await Profile.create({
+    await ProfileModel.create({
       name: 'James',
       nickname: 'jimmy',
       email: 'jamse@example.com',
       capital: 2000,
       divisa: 'divisa',
-      prefered_cryptocurrency: 'ETH',
+      preferred_cryptocurrency: 'ETH',
     });
 
     const response = await request(server).get('/api/profile/');
@@ -64,7 +64,7 @@ describe.only('profiles API', () => {
       email: 'john@example.com',
     };
 
-    await Profile.create({ ...profileData });
+    await ProfileModel.create({ ...profileData });
 
     const response = await request(server)
       .post('/api/profile/')
